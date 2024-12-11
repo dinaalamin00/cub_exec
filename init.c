@@ -23,6 +23,8 @@ void    set_player(t_map *map)
 
     // for(int i =0; map->map[i]; i++)
     //     printf("%s\n", map->map[i]);
+    printf(" hi = %d \t we = %d\n\n", map->map_height, map->map_width);
+
     i = 0;
     while (i < map->map_height && map->map[i])
     {
@@ -41,6 +43,8 @@ void    set_player(t_map *map)
         }
         i++;
     }
+        printf(" player x = %d \t player y = %d\n\n", map->player_x, map->player_y);
+
 }
 
 void    set_map(t_map *map)
@@ -74,6 +78,6 @@ void    set_map(t_map *map)
     close (fd);
     // for(int i =0; map->map[i]; i++)
     //     printf("%s\n", map->map[i]);
-    map->map_height = 5;
-    map->map_width = 5;
+    map->map_height = n;
+    map->map_width = ft_strlen(map->map[0]);
 }

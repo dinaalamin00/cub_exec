@@ -32,6 +32,18 @@
 #define WIN_WIDTH 1920
 #define WIN_HEIGHT 1080
 
+// Wall color (gray)
+# define WALL_COLOR 0x808080
+
+// Floor color (light gray)
+# define FLOOR_COLOR 0xD3D3D3
+
+// Player color (blue)
+# define PLAYER_COLOR 0x0000FF
+
+# define RED 0xFF0000
+
+
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -78,4 +90,5 @@ void    set_map(t_map *map);
 void    set_player(t_map *map);
 void    render_map(t_cub *cub);
 int 	events(int keycode, t_cub *cub);
+
 #endif

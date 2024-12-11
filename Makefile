@@ -1,4 +1,4 @@
-SRC = main.c
+SRC = main.c init.c
 #BONUS = 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror

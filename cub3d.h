@@ -29,8 +29,8 @@
 // # define ROT_SP 0.045
 // # define PL_SP 4
 #define TILE_SIZE 50
-#define WIN_WIDTH 300
-#define WIN_HEIGHT 250
+#define WIN_WIDTH 1920
+#define WIN_HEIGHT 1080
 
 
 # include <stdlib.h>
@@ -76,5 +76,6 @@ typedef struct s_cub {
 void    init_all(t_cub *cub);
 void    set_map(t_map *map);
 void    set_player(t_map *map);
-int key_hook(int keycode, t_cub *cub);
+void    render_map(t_cub *cub);
+int 	events(int keycode, t_cub *cub);
 #endif

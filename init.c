@@ -21,31 +21,59 @@ void    set_player(t_map *map)
     int i;
     int j;
 
-    for (i = 0; i < map->map_height; i++)
+    // for(int i =0; map->map[i]; i++)
+    //     printf("%s\n", map->map[i]);
+    i = 0;
+    while (i < map->map_height && map->map[i])
     {
-        for (j = 0; j < map->map_width; j++)
+        j = 0;
+        while (j < map->map_width && map->map[i][j])
         {
             if (map->map[i][j] == 'N')
             {
-                map->player_x = j;
-                map->player_y = i;
+
+                map->player_x = i;
+                map->player_y = j;
                 map->map[i][j] = '0';
                 return ;
             }
-
+            j++;
         }
-    }  
+        i++;
+    }
 }
 
 void    set_map(t_map *map)
 {
-    map->map = {
-    "111111",
-    "100101",
-    "101001",
-    "1100N1",
-    "111111",
-    };
-    map->map_height = 6;
+    int n;
+    int i;
+    int fd;
+    char * line;
+
+    fd = open("map.cub", O_RDONLY);
+    if (fd == -1)
+        perror("file");
+    n = 0;
+    line = ft_strdup(NULL);
+    line = get_next_line(fd);
+    while ((line))
+    {
+        n++;
+        line = get_next_line(fd);
+    }
+    close(fd);
+    map->map = malloc((n + 1)*sizeof(char *));
+    fd = open("map.cub", O_RDONLY);
+    i = 0;
+    map->map[i] = get_next_line(fd);
+    while (map->map[i])
+    {
+        i++;
+        map->map[i] = get_next_line(fd);
+    }
+    close (fd);
+    // for(int i =0; map->map[i]; i++)
+    //     printf("%s\n", map->map[i]);
+    map->map_height = 5;
     map->map_width = 5;
 }

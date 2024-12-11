@@ -15,21 +15,21 @@ void    draw_tile(t_data *img, int x, int y, int color)
     int i;
     int j;
 
-    for (i = 0; i < y; i++)
+    for (i = 0; i < TILE_SIZE; i++)
     {
-        for (j = 0; j< x; j++)
+        for (j = 0; j< TILE_SIZE; j++)
         {
             my_mlx_pixel_put(img, x + j, y + i, color);
         }
     }
 }
-void draw_square(t_cub *cub, int x, int y, int color) {
-    for (int i = 0; i < 10; i++) {
-        for (int j = 0; j < 10; j++) {
-            my_mlx_pixel_put(&cub->img, x * 10 + i, y * 10 + j, color);
-        }
-    }
-}
+// void draw_square(t_cub *cub, int x, int y, int color) {
+//     for (int i = 0; i < 10; i++) {
+//         for (int j = 0; j < 10; j++) {
+//             my_mlx_pixel_put(&cub->img, x * 10 + i, y * 10 + j, color);
+//         }
+//     }
+// }
 
 void    render_map(t_cub *cub)
 {
@@ -40,10 +40,10 @@ void    render_map(t_cub *cub)
 
     mlx_clear_window(cub->mlx, cub->mlx_wind);
     i = 0;
-    while (cub->map.map[i])
+    while (i < cub->map.map_height)
     {
         j = 0;
-        while (cub->map.map[i][j])
+        while (j < cub->map.map_width)
         {
             scr_x = j * TILE_SIZE;
             scr_y = i * TILE_SIZE;

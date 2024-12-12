@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:38:43 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/09 20:35:40 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/12 18:19:02 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 # define A 0
 # define S 1
 # define D 2
+# define PI 3.141592653589793238462643383279502884197
+# define SPEED 0.1
 // # define ARROW_UP 126
 // # define ARROW_DOWN 125
-// # define ARROW_LEFT 123
-// # define ARROW_RIGHT 124
+# define ARROW_LEFT 123
+# define ARROW_RIGHT 124
 
 // # define FOV 60
 // # define ROT_SP 0.045
@@ -73,6 +75,7 @@ typedef struct s_map {
 	// char 	*east_txt ;
 	int		player_x;
 	int		player_y;
+	int		player_angle;
 	// char	player_direc;
 	// int		ceil_color;
 	// int		floor_color;
@@ -90,5 +93,6 @@ void    set_map(t_map *map);
 void    set_player(t_map *map);
 void    render_map(t_cub *cub);
 int 	events(int keycode, t_cub *cub);
+float	deg_to_rad(int angle_d);
 
 #endif

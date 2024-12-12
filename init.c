@@ -21,10 +21,6 @@ void    set_player(t_map *map)
     int i;
     int j;
 
-    // for(int i =0; map->map[i]; i++)
-    //     printf("%s\n", map->map[i]);
-    printf(" hi = %d \t we = %d\n\n", map->map_height, map->map_width);
-
     i = 0;
     while (i < map->map_height && map->map[i])
     {
@@ -33,17 +29,18 @@ void    set_player(t_map *map)
         {
             if (map->map[i][j] == 'N')
             {
-
-                map->player_x = i;
-                map->player_y = j;
+				// printf(" i = %d, j = %d c = %c\n\n", i, j, map->map[i][j]);
                 map->map[i][j] = '0';
+				// printf(" i = %d, j = %d c = %c\n\n", i, j, map->map[i][j]);
+                map->player_x = j + 0.5;
+                map->player_y = i;
                 return ;
             }
             j++;
         }
         i++;
     }
-        printf(" player x = %d \t player y = %d\n\n", map->player_x, map->player_y);
+    map->player_angle = 90;
 
 }
 

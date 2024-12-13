@@ -1,10 +1,15 @@
 # include "cub3d.h"
 
-float	deg_to_rad(int angle_d)
+double	deg_to_rad(double angle_d)
 {
-	float	angle_r;
+	double	angle_r;
 
-	angle_r = angle_d * (PI/180);
+	if ((angle_d) < 0)
+			angle_d += 360;
+	else if ((angle_d > (360)))
+			angle_d -= 360;
+	angle_r = angle_d * (PI / 180.0);
+	// printf(" ang = %f\n\n", angle_r);
 	return (angle_r);
 }
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
@@ -68,7 +73,7 @@ void    draw_tile(t_data *img, int x, int y, int color)
         }
     }
 }
-void	draw_direction_line(t_data *img, int player_x, int player_y, int angle, int color)
+void	draw_direction_line(t_data *img, int player_x, int player_y, double angle, int color)
 {
 	int	x;
 	int	y;
@@ -88,9 +93,10 @@ void	draw_direction_line(t_data *img, int player_x, int player_y, int angle, int
 	// 	y+=dy;
 	// 	i++;
 	// }
-	x = player_x + cos(angle) * 100;
-	y = player_y - sin(angle) * 100;
-	draw_line(img, player_x + TILE_SIZE / 2, x , player_y , y , color);
+	// printf(" ang = %d\n\n", angle);
+	x = player_x + cos(angle) * 200;
+	y = player_y + sin(angle) * 200;
+	draw_line(img, player_x , x , player_y , y , color);
 }
 
 void    render_map(t_cub *cub)
@@ -111,25 +117,16 @@ void    render_map(t_cub *cub)
             scr_y = i * TILE_SIZE;
             if (cub->map.map[i][j] == '1')
                 draw_tile(&cub->img, scr_x, scr_y, WALL_COLOR); // wall
-            // else if (cub->map.map[i][j] == 'N')
-            //     draw_tile(&cub->img, scr_x, scr_y, FLOOR_COLOR); // player
             else if (cub->map.map[i][j] == '0')
                 draw_tile(&cub->img, scr_x, scr_y, FLOOR_COLOR); //open space
-            // if (cub->map.map[i][j] == '1')
-            //     draw_square(cub, i, j, WALL_COLOR);
-            // else if (cub->map.map[i][j] == '0')
-            //     draw_square(cub, i, j, FLOOR_COLOR);
-            // else if (cub->map.map[i][j] == 'N')
-            //     draw_square(cub, i, j, PLAYER_COLOR);
 
             j++;
         }
         i++;
     }
-    draw_tile(&cub->img, cub->map.player_x * TILE_SIZE, cub->map.player_y * TILE_SIZE, RED);
-	draw_direction_line(&cub->img, cub->map.player_x * TILE_SIZE, cub->map.player_y * TILE_SIZE, deg_to_rad(cub->map.player_angle), RED);
+    draw_tile(&cub->img, cub->map.player_x * TILE_SIZE, cub->map.player_y * TILE_SIZE, PLAYER_COLOR);
+	// draw_direction_line(&cub->img, (cub->map.player_x * TILE_SIZE) + (TILE_SIZE / 2), cub->map.player_y * TILE_SIZE, deg_to_rad(cub->map.player_angle), RED);
     if (cub->img.addr == NULL)
         printf("Failed to get image address\n");
-    // printf(" player x = %d \t player y = %d\n\n", cub->map.player_x, cub->map.player_y);
     mlx_put_image_to_window(cub->mlx, cub->mlx_wind, cub->img.img, 0, 0);
 }

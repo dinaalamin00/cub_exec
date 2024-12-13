@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:31:17 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/10 15:48:36 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/13 12:50:31 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int main(void)
 	cub.map.map = malloc(6 * sizeof(char *));
 	set_map(&cub.map);
 	set_player(&cub.map);
+	// printf(" 1 ang = %d\n\n", cub.map.player_angle);
 	render_map(&cub);
 	mlx_key_hook(cub.mlx_wind, events, &cub);
 	// mlx_hook(cub.mlx_wind, 2, 0, &events, &cub);

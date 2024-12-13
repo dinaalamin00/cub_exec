@@ -22,6 +22,9 @@ void    set_player(t_map *map)
     int j;
 
     i = 0;
+    map->player_angle = 90;
+	map->dx = cos(deg_to_rad(map->player_angle));
+	map->dy = -sin(deg_to_rad(map->player_angle));
     while (i < map->map_height && map->map[i])
     {
         j = 0;
@@ -29,10 +32,8 @@ void    set_player(t_map *map)
         {
             if (map->map[i][j] == 'N')
             {
-				// printf(" i = %d, j = %d c = %c\n\n", i, j, map->map[i][j]);
                 map->map[i][j] = '0';
-				// printf(" i = %d, j = %d c = %c\n\n", i, j, map->map[i][j]);
-                map->player_x = j + 0.5;
+                map->player_x = j;
                 map->player_y = i;
                 return ;
             }
@@ -40,8 +41,6 @@ void    set_player(t_map *map)
         }
         i++;
     }
-    map->player_angle = 90;
-
 }
 
 void    set_map(t_map *map)
@@ -73,8 +72,6 @@ void    set_map(t_map *map)
         map->map[i] = get_next_line(fd);
     }
     close (fd);
-    // for(int i =0; map->map[i]; i++)
-    //     printf("%s\n", map->map[i]);
     map->map_height = n;
     map->map_width = ft_strlen(map->map[0]);
 }

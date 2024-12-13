@@ -2,58 +2,69 @@
 
 int events(int keycode, t_cub *cub)
 {
-    int new_x;
-    int new_y;
+    double new_x;
+    double new_y;
+	// float	dx;
+	// float	dy;
 
     new_x = cub->map.player_x;
     new_y = cub->map.player_y;
+
     if (keycode == ESC)
       exit(0); // should make a function thats clears all , free, and exit
     else if (keycode == W)
 	{
-      cub->map.player_x += (cos(deg_to_rad(cub->map.player_angle)) * SPEED); // move up
-      cub->map.player_y -= (sin(deg_to_rad(cub->map.player_angle))* SPEED); // move up
+     	new_x += cub->map.dx * SPEED; // move up
+     	new_y += cub->map.dy * SPEED; // move up
+		printf("ang = %f\n\n", cub->map.player_angle);
+	// in a 2d map only y changes
 
 	}
     else if (keycode == S)
 	{
-       cub->map.player_x -= cos(deg_to_rad(cub->map.player_angle))* SPEED; // move down
-      cub->map.player_y += sin(deg_to_rad(cub->map.player_angle))* SPEED; // move down
+		new_x -= cub->map.dx * SPEED;
+		new_y -= cub->map.dy * SPEED;
+    //   new_y += 1; // move down
+	// in a 2d map only y changes
 
 	} 
     else if (keycode == D)
 	{
-       cub->map.player_x += cos((deg_to_rad(cub->map.player_angle + 90))) * SPEED; //move right
-      cub->map.player_y += sin((deg_to_rad(cub->map.player_angle + 90))) * SPEED; //move right
-
+		new_x -= cub->map.dy * SPEED; //move right
+	   new_y += cub->map.dx * SPEED;
+	// in a 2d map only x changes
 	}
     else if (keycode == A)
 	{
-		cub->map.player_x -= cos(deg_to_rad(cub->map.player_angle + 90)) * SPEED; //move left
-		cub->map.player_y -= sin(deg_to_rad(cub->map.player_angle + 90)) * SPEED; //move left
+		new_x += cub->map.dy * SPEED; //move left
+		new_y -= cub->map.dx * SPEED;
+		// new_y -= 1; //move left
+	// in a 2d map only x changes
 
 	}
 	else if (keycode == ARROW_RIGHT)
 	{
-		cub->map.player_angle += 5;
-		if (cub->map.player_angle >= 360)
-			cub->map.player_angle -= 360;
-		// new_x += cos(PI/3); //rot right
-		// new_y += sin(PI/3); //rot right
+		cub->map.player_angle -= 45;
+		cub->map.dx = cos(deg_to_rad(cub->map.player_angle));
+		cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
+		printf("ang = %f\n\n", cub->map.player_angle);
 	}
 	else if (keycode == ARROW_LEFT)
 	{
-		cub->map.player_angle -= 5;
-		if (cub->map.player_angle < 0)
-			cub->map.player_angle += 360;
-		// new_x -= cos(PI/3) * 100; //rot right
-		// new_y -= sin(PI/3) * 100; //rot right
+		cub->map.player_angle += 45;
+		cub->map.dx = cos(deg_to_rad(cub->map.player_angle));
+		cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
+		printf("ang = %f\n\n", cub->map.player_angle);
 	}
-    // if (cub->map.map[new_y][new_x] == '0')
-    // {
-    //     cub->map.player_x = cub->map.player_x;
-    //     cub->map.player_y = cub->map.player_y;
-    // }
+	if ((cub->map.player_angle) < 0)
+			cub->map.player_angle += 360;
+	else if ((cub->map.player_angle >= (360)))
+			cub->map.player_angle -= 360;
+    if (cub->map.map[(int)(new_y)][(int)new_x] == '0')
+    {
+        cub->map.player_x = new_x;
+        cub->map.player_y = new_y;
+    }
     render_map(cub);
     return (0);
     

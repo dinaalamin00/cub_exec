@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:38:43 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/12 18:19:02 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/13 16:30:18 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define S 1
 # define D 2
 # define PI 3.141592653589793238462643383279502884197
-# define SPEED 0.1
+# define SPEED 1
 // # define ARROW_UP 126
 // # define ARROW_DOWN 125
 # define ARROW_LEFT 123
@@ -75,7 +75,9 @@ typedef struct s_map {
 	// char 	*east_txt ;
 	int		player_x;
 	int		player_y;
-	int		player_angle;
+	double		player_angle;
+	double		dx;
+	double		dy;
 	// char	player_direc;
 	// int		ceil_color;
 	// int		floor_color;
@@ -93,6 +95,6 @@ void    set_map(t_map *map);
 void    set_player(t_map *map);
 void    render_map(t_cub *cub);
 int 	events(int keycode, t_cub *cub);
-float	deg_to_rad(int angle_d);
+double	deg_to_rad(double angle_d);
 
 #endif

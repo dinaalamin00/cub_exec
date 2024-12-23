@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:38:43 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/13 16:30:18 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/23 18:34:28 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define S 1
 # define D 2
 # define PI 3.141592653589793238462643383279502884197
-# define SPEED 1
+# define SPEED 5
 // # define ARROW_UP 126
 // # define ARROW_DOWN 125
 # define ARROW_LEFT 123
@@ -30,9 +30,10 @@
 // # define FOV 60
 // # define ROT_SP 0.045
 // # define PL_SP 4
-#define TILE_SIZE 50
+#define TILE_SIZE 64
 #define WIN_WIDTH 1920
 #define WIN_HEIGHT 1080
+#define NO_HIT -1
 
 // Wall color (gray)
 # define WALL_COLOR 0x808080
@@ -44,6 +45,7 @@
 # define PLAYER_COLOR 0x0000FF
 
 # define RED 0xFF0000
+# define BLACK 0x000000
 
 
 
@@ -56,6 +58,11 @@
 # include <errno.h>
 # include <math.h>
 # include "minilibx/mlx.h"
+
+typedef struct s_point {
+	double	x;
+	double	y;
+}	t_point;
 
 typedef struct	s_data {
 	void	*img;
@@ -73,11 +80,12 @@ typedef struct s_map {
 	// char 	*south_txt ;
 	// char 	*west_txt ;
 	// char 	*east_txt ;
-	int		player_x;
-	int		player_y;
+	t_point		player;
 	double		player_angle;
+	double		ray_angle;
 	double		dx;
 	double		dy;
+	// double		player_fov;
 	// char	player_direc;
 	// int		ceil_color;
 	// int		floor_color;
@@ -88,6 +96,7 @@ typedef struct s_cub {
     void    *mlx_wind;
     t_data  img;
     t_map    map;
+	double		player_fov;
 } t_cub;
 
 void    init_all(t_cub *cub);
@@ -96,5 +105,12 @@ void    set_player(t_map *map);
 void    render_map(t_cub *cub);
 int 	events(int keycode, t_cub *cub);
 double	deg_to_rad(double angle_d);
+void	reset_angle(double *angle);
+void    draw_tile(t_data *img, double x, double y, int color);
+
+int	is_wall(double pix_x, double pix_y, t_cub *cub);
+
+t_point	intersect_point(t_map *map);
+double	count_distance(t_point point, t_point player);
 
 #endif

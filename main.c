@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:31:17 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/13 12:50:31 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/23 18:41:22 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int main(void)
 	cub.img.addr = mlx_get_data_addr(cub.img.img, &cub.img.bits_per_pixel, &cub.img.line_length, &cub.img.endian);
 	if (!cub.img.addr)
 		return (0);
+	cub.player_fov = 60;
 	cub.map.map = malloc(6 * sizeof(char *));
 	set_map(&cub.map);
 	set_player(&cub.map);

@@ -1,5 +1,12 @@
 # include "cub3d.h"
 
+void	reset_angle(double *angle)
+{
+	if ((*angle) < 0)
+			*angle += 360;
+	else if ((*angle >= (360)))
+			*angle -= 360;
+}
 int events(int keycode, t_cub *cub)
 {
     double new_x;
@@ -7,8 +14,8 @@ int events(int keycode, t_cub *cub)
 	// float	dx;
 	// float	dy;
 
-    new_x = cub->map.player_x;
-    new_y = cub->map.player_y;
+    new_x = cub->map.player.x;
+    new_y = cub->map.player.y;
 
     if (keycode == ESC)
       exit(0); // should make a function thats clears all , free, and exit
@@ -18,7 +25,6 @@ int events(int keycode, t_cub *cub)
      	new_y += cub->map.dy * SPEED; // move up
 		printf("ang = %f\n\n", cub->map.player_angle);
 	// in a 2d map only y changes
-
 	}
     else if (keycode == S)
 	{
@@ -44,28 +50,30 @@ int events(int keycode, t_cub *cub)
 	}
 	else if (keycode == ARROW_RIGHT)
 	{
-		cub->map.player_angle -= 45;
+		cub->map.player_angle -= 3;
+		cub->map.ray_angle = cub->map.player_angle;
+		reset_angle(&cub->map.player_angle);
 		cub->map.dx = cos(deg_to_rad(cub->map.player_angle));
 		cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
 		printf("ang = %f\n\n", cub->map.player_angle);
 	}
 	else if (keycode == ARROW_LEFT)
 	{
-		cub->map.player_angle += 45;
+		cub->map.player_angle += 3;
+		cub->map.ray_angle = cub->map.player_angle;
+		reset_angle(&cub->map.player_angle);
 		cub->map.dx = cos(deg_to_rad(cub->map.player_angle));
 		cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
 		printf("ang = %f\n\n", cub->map.player_angle);
 	}
-	if ((cub->map.player_angle) < 0)
-			cub->map.player_angle += 360;
-	else if ((cub->map.player_angle >= (360)))
-			cub->map.player_angle -= 360;
-    if (cub->map.map[(int)(new_y)][(int)new_x] == '0')
+	reset_angle(&cub->map.player_angle);
+    if (cub->map.map[(int)(new_y / TILE_SIZE)][(int)new_x / TILE_SIZE] == '0')
     {
-        cub->map.player_x = new_x;
-        cub->map.player_y = new_y;
+        cub->map.player.x = new_x;
+        cub->map.player.y = new_y;
     }
+	cub->map.dx = cos(deg_to_rad(cub->map.player_angle));
+	cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
     render_map(cub);
     return (0);
-    
 }

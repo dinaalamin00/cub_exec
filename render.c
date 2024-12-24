@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/24 12:45:45 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/24 12:51:13 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/24 19:07:26 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ double	deg_to_rad(double angle_d)
 {
 	double	angle_r;
 
-	reset_angle(&angle_d);
+	// reset_angle(&angle_d);
 	if ((angle_d) < 0)
 		angle_d += 360;
 	else if ((angle_d > (360)))
@@ -112,13 +112,14 @@ void	draw_direction_line(t_cub *cub)
 	t_point	point;
 
 	cub->map.ray_angle = cub->map.player_angle;
+	reset_angle(&cub->map.player_angle);
 	while (cub->map.ray_angle < (cub->map.player_angle + cub->player_fov / 2))
 	{
 		point = intersect_point(&cub->map);
 		if (point.x != -1 && point.y != -1)
 			draw_ray(cub, point);
-		cub->map.ray_angle += 3;
-		// reset_angle(&cub->map.ray_angle);
+		cub->map.ray_angle += 0.1;
+
 	}
 	cub->map.ray_angle = cub->map.player_angle;
 	while (cub->map.ray_angle > (cub->map.player_angle - cub->player_fov / 2))
@@ -126,7 +127,7 @@ void	draw_direction_line(t_cub *cub)
 		point = intersect_point(&cub->map);
 		if (point.x != -1 && point.y != -1)
 			draw_ray(cub, point);
-		cub->map.ray_angle -= 3;
+		cub->map.ray_angle -= 0.1;
 		// reset_angle(&cub->map.ray_angle);
 	}
 }

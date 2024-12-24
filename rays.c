@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:59:41 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/24 12:57:58 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/24 19:06:27 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,23 @@ double	round_num(double num)
 
 t_point	horizontal_coord(t_map *map)
 {
-	t_point	intersect;
-	t_point	step;
-	t_point	p;
+    t_point intersect; // Point of intersection
+    t_point step;      // Steps to move to the next horizontal grid line
+	t_point p;
+	double temp;
 
 	// reset_angle(&map->ray_angle);
+	temp = map->ray_angle;
 	p.x = map->player.x;
 	p.y = map->player.y;
-	if (map->ray_angle > 0 && map->ray_angle < 180)
-		intersect.y = round_num(map->player.y / TILE_SIZE) * TILE_SIZE - 1;
-	else
-		intersect.y = round_num(map->player.y / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
-	intersect.x = p.x + (p.y - intersect.y) / tan(deg_to_rad(map->ray_angle));
+	reset_angle(&temp);
+    if (temp > 0 && temp < 180)
+        intersect.y = floor(map->player.y / TILE_SIZE) * TILE_SIZE - 1; // Facing up
+    else
+        intersect.y = floor(map->player.y / TILE_SIZE) * TILE_SIZE + TILE_SIZE; // Facing down
+    intersect.x = p.x + (p.y - intersect.y) / tan(deg_to_rad(map->ray_angle));
 	step.y = TILE_SIZE;
-	if (map->ray_angle > 0 && map->ray_angle < 180)
+	if (temp > 0 && temp < 180)
 		step.y = -TILE_SIZE;
 	step.x = -step.y / tan(deg_to_rad(map->ray_angle));
 	while ((intersect.x >= 0 && intersect.x < map->map_width * TILE_SIZE)
@@ -58,18 +61,22 @@ t_point	horizontal_coord(t_map *map)
 
 t_point	vertical_coord(t_map *map)
 {
-	t_point	intersect;
-	t_point	step;
-	t_point	p;
+    t_point intersect;
+    t_point step;
+	t_point p;
+double	temp;
+
+	temp =map->ray_angle;
 
 	// reset_angle(&map->ray_angle);
 	p.x = map->player.x;
 	p.y = map->player.y;
-	if (map->ray_angle > 90 && map->ray_angle < 270)
-		intersect.x = round_num(map->player.x / TILE_SIZE) * TILE_SIZE - 1;
-	else
-		intersect.x = round_num(map->player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
-	intersect.y = p.y + (p.x - intersect.x) * tan(deg_to_rad(map->ray_angle));
+	reset_angle(&temp);
+    if (temp > 90 && temp < 270)
+        intersect.x = floor(map->player.x / TILE_SIZE) * TILE_SIZE - 1;
+    else
+        intersect.x = floor(map->player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
+    intersect.y = p.y + (p.x - intersect.x) * tan(deg_to_rad(map->ray_angle));
 	step.x = TILE_SIZE;
 	if (map->ray_angle > 90 && map->ray_angle < 270)
 		step.x = -TILE_SIZE;
@@ -84,6 +91,7 @@ t_point	vertical_coord(t_map *map)
 	}
 	return ((t_point){NO_HIT, NO_HIT});
 }
+
 
 int	is_wall(double pix_x, double pix_y, t_cub *cub)
 {

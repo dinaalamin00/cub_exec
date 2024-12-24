@@ -21,9 +21,9 @@ void	set_player(t_map *map)
 	int	i;
 	int	j;
 
-	i = 0;
-	map->player_angle = 90;
-	map->ray_angle = map->player_angle;
+    i = 0;
+    map->player_angle = 45;
+    map->ray_angle = map->player_angle;
 	map->dx = cos(deg_to_rad(map->player_angle));
 	map->dy = -sin(deg_to_rad(map->player_angle));
 	while (i < map->map_height && map->map[i])

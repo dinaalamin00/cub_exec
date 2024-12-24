@@ -1,7 +1,7 @@
 SRC = main.c init.c render.c hook.c  gnl/get_next_line_utils.c gnl/get_next_line.c rays.c
 #BONUS = 
 CC = cc
-CFLAGS = -g -v -fsanitize=address
+CFLAGS = -g -v -fsanitize=address,undefined
 OBJ = ${SRC:.c=.o}
 #BONOBJ = ${BONUS:.c=.o}
 LIBFTA = Libft/libft.a

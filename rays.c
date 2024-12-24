@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 16:59:41 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/23 18:46:44 by diahmed          ###   ########.fr       */
+/*   Updated: 2024/12/24 12:33:37 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ t_point horizontal_coord(t_map *map)
     t_point step;      // Steps to move to the next horizontal grid line
 	t_point p;
 
-    reset_angle(&map->ray_angle);
-	p.x = map->player.x + TILE_SIZE / 2;
-	p.y = map->player.y + TILE_SIZE / 2;
+    // reset_angle(&map->ray_angle);
+	p.x = map->player.x;
+	p.y = map->player.y;
     if (map->ray_angle > 0 && map->ray_angle < 180)
         intersect.y = floor(map->player.y / TILE_SIZE) * TILE_SIZE - 1; // Facing up
     else
@@ -66,18 +66,18 @@ t_point vertical_coord(t_map *map)
     t_point step;
 	t_point p;
 
-    reset_angle(&map->ray_angle);
-	p.x = map->player.x + TILE_SIZE / 2;
-	p.y = map->player.y + TILE_SIZE / 2;
+    // reset_angle(&map->ray_angle);
+	p.x = map->player.x;
+	p.y = map->player.y;
     if (map->ray_angle > 90 && map->ray_angle < 270)
-        intersect.x = floor(map->player.x / TILE_SIZE) * TILE_SIZE - 1;
+        intersect.x = round_num(map->player.x / TILE_SIZE) * TILE_SIZE - 1;
     else
-        intersect.x = floor(map->player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
+        intersect.x = round_num(map->player.x / TILE_SIZE) * TILE_SIZE + TILE_SIZE;
     intersect.y = p.y + (p.x - intersect.x) * tan(deg_to_rad(map->ray_angle));
 	step.x = TILE_SIZE;
 	if (map->ray_angle > 90 && map->ray_angle < 270)
         step.x = -TILE_SIZE;              
-    step.y = step.x * tan(deg_to_rad(map->ray_angle));
+    step.y = -step.x * tan(deg_to_rad(map->ray_angle));
     while ((intersect.x >= 0 && intersect.x < map->map_width * TILE_SIZE) &&
            (intersect.y >= 0 && intersect.y < map->map_height * TILE_SIZE))
     {
@@ -112,7 +112,7 @@ t_point	intersect_point(t_map *map)
 
 	h_distance = -1;
 	v_distance = -1;
-	reset_angle(&map->ray_angle);
+	// reset_angle(&map->ray_angle);
 	horizontal_hit = horizontal_coord(map);
 	vertical_hit = vertical_coord(map);
 	// printf("in ray h_x = %f\th_y = %f\n\n", horizontal_hit.x, horizontal_hit.y);

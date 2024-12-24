@@ -66,8 +66,8 @@ int events(int keycode, t_cub *cub)
 		cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
 		printf("ang = %f\n\n", cub->map.player_angle);
 	}
-	reset_angle(&cub->map.player_angle);
-    if (cub->map.map[(int)(new_y / TILE_SIZE)][(int)new_x / TILE_SIZE] == '0')
+	// reset_angle(&cub->map.player_angle);
+    if (cub->map.map[(int)(new_y / TILE_SIZE)][(int)(new_x / TILE_SIZE)] != '1')
     {
         cub->map.player.x = new_x;
         cub->map.player.y = new_y;

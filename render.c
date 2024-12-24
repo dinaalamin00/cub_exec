@@ -29,13 +29,13 @@ void	draw_player(t_data *img, double x, double y, int color)
 
 	// x = x;
 	// y = y;
-	i = TILE_SIZE / 3;
-	while (i < ((TILE_SIZE * 2) / 3))
+	i = y - TILE_SIZE / 8;
+	while (i < y + TILE_SIZE / 8)
 	{
-		j = TILE_SIZE / 3;
-		while ( j < (TILE_SIZE  * 2) / 3)
+		j = x - TILE_SIZE / 8;
+		while ( j < x + TILE_SIZE / 8)
 		{
-			my_mlx_pixel_put(img, x + j, y + i, color);
+			my_mlx_pixel_put(img, j, i, color);
 			j++;
 		}
 		i++;
@@ -86,8 +86,8 @@ void draw_ray(t_cub *cub, t_point intersect)
     // double x_step;
     // double y_step;
 
-	x = cub->map.player.x + TILE_SIZE / 2;
-	y = cub->map.player.y + TILE_SIZE / 2 ;
+	x = cub->map.player.x;
+	y = cub->map.player.y;
 
     // Calculate the distance from the player to the intersection point
 	// printf("player start x = %f\ty = %f\n\n", x, y);
@@ -126,7 +126,7 @@ void	draw_direction_line(t_cub *cub)
 		if (point.x != -1 && point.y != -1)
 			draw_ray(cub, point);
 		cub->map.ray_angle += 3;
-		reset_angle(&cub->map.ray_angle);
+		// reset_angle(&cub->map.ray_angle);
 
 	}
 	cub->map.ray_angle = cub->map.player_angle;
@@ -136,7 +136,7 @@ void	draw_direction_line(t_cub *cub)
 		if (point.x != -1 && point.y != -1)
 			draw_ray(cub, point);
 		cub->map.ray_angle -= 3;
-		reset_angle(&cub->map.ray_angle);
+		// reset_angle(&cub->map.ray_angle);
 	}
 }
 

@@ -34,8 +34,8 @@ void    set_player(t_map *map)
             if (map->map[i][j] == 'N')
             {
                 map->map[i][j] = '0';
-                map->player.x = j * TILE_SIZE;
-                map->player.y = i * TILE_SIZE;
+                map->player.x = j * TILE_SIZE + TILE_SIZE / 2;
+                map->player.y = i * TILE_SIZE + TILE_SIZE / 2;
                 return ;
             }
             j++;

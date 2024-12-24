@@ -12,12 +12,17 @@
 
 #include "cub3d.h"
 
-void	reset_angle(double *angle)
+/*
+	Use fmod to constrict the angles to a [0, 360) range. This way,
+	you can make sure that it will always be as you want it. Subtracting
+	`360` from it doesn't guarantee that it will fall in that range, and
+	will force you to hardcode a reset somewhere else in your code!
+*/
+void reset_angle(double *angle)
 {
-	if ((*angle) < 0)
-		*angle += 360;
-	else if ((*angle >= (360)))
-		*angle -= 360;
+    *angle = fmod(*angle, 360.0);
+    if (*angle < 0)
+        *angle += 360.0;
 }
 
 int	events(int keycode, t_cub *cub)
@@ -68,7 +73,6 @@ int	events(int keycode, t_cub *cub)
 		cub->map.dy = -sin(deg_to_rad(cub->map.player_angle));
 		printf("ang = %f\n\n", cub->map.player_angle);
 	}
-	// reset_angle(&cub->map.player_angle);
 	if (cub->map.map[(int)(new_y / TILE_SIZE)][(int)(new_x / TILE_SIZE)] != '1')
 	{
 		cub->map.player.x = new_x;

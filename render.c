@@ -12,15 +12,20 @@
 
 #include "cub3d.h"
 
+
+/*
+	Have more trust in your code. If it's reset properly,
+	it will never need to be reset again.
+*/
 double	deg_to_rad(double angle_d)
 {
 	double	angle_r;
 
 	// reset_angle(&angle_d);
-	if ((angle_d) < 0)
-		angle_d += 360;
-	else if ((angle_d > (360)))
-		angle_d -= 360;
+	// if ((angle_d) < 0)
+	// 	angle_d += 360;
+	// else if ((angle_d > (360)))
+	// 	angle_d -= 360;
 	angle_r = angle_d * (PI / 180.0);
 	return (angle_r);
 }
@@ -112,7 +117,7 @@ void	draw_direction_line(t_cub *cub)
 	t_point	point;
 
 	cub->map.ray_angle = cub->map.player_angle;
-	reset_angle(&cub->map.player_angle);
+	// reset_angle(&cub->map.player_angle);
 	while (cub->map.ray_angle < (cub->map.player_angle + cub->player_fov / 2))
 	{
 		point = intersect_point(&cub->map);

@@ -64,6 +64,17 @@ typedef struct s_point {
 	double	y;
 }	t_point;
 
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     line_length;
+    int     bits_per_pixel;
+	int		endian;
+} t_texture;
+
 typedef struct	s_data {
 	void	*img;
 	char	*addr;
@@ -96,6 +107,10 @@ typedef struct s_cub {
     void    *mlx_wind;
     t_data  img;
     t_map    map;
+	t_texture	n_text;
+	t_texture	s_text;
+	t_texture	e_text;
+	t_texture	w_text;
 	double		player_fov;
 } t_cub;
 

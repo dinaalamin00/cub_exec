@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wall.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/25 14:22:08 by diahmed           #+#    #+#             */
+/*   Updated: 2024/12/25 16:13:37 by diahmed          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 /* 
 - load textures
@@ -10,7 +22,7 @@
 
 int get_pixel_color(t_texture *tex, int x, int y)
 {
-    char *pixel = tex->data + (y * tex->line_length + x * (tex->bits_per_pixel / 8));
+    char *pixel = tex->addr + (y * tex->line_length + x * (tex->bits_per_pixel / 8));
     return *(int *)pixel;
 }
 
@@ -20,19 +32,23 @@ void    slice_wall(t_cub *cub, t_texture *text, int text_x)
     double  wall_top;
     double  wall_bottom;
     double  y;
-    double  pixel;
+    int  pixel;
     int     text_y;
 
-    wall_top = WIN_HEIGHT / 2 - wall_height(cub) / 2;
-    wall_bottom = WIN_HEIGHT / 2 + wall_height(cub) / 2;
+	printf("::: wall height = %f\n\n", wall_height(cub));
+    wall_top = ((cub->map.map_height * TILE_SIZE) / 2) - wall_height(cub) / 2;
+    wall_bottom = (cub->map.map_height * TILE_SIZE) / 2 + wall_height(cub) / 2;
+	printf("::: wall top = %f\n\n", wall_top);
+	printf("::: wall bottom = %f\n\n", wall_bottom);
+
     y = wall_top;
     if (wall_top < 0)
         y = 0; // if top < 0 :: top = 0
-    while (y < wall_bottom && y < WIN_HEIGHT)
+    while (y < wall_bottom && y < cub->map.map_height * TILE_SIZE)
     {
-        text_y = (y - wall_top) * text->height / wall_height();
+        text_y = (y - wall_top) * text->height / wall_height(cub);
         pixel = get_pixel_color(text, text_x, text_y);
-        my_mlx_pixel_put(cub->img, cub->map.ray_column, y, pixel);
+        my_mlx_pixel_put(&cub->img, cub->map.ray_column, y, pixel, cub);
         y++;
     }
     
@@ -49,7 +65,7 @@ void    render_wall(t_cub *cub)
             texture = cub->e_text;
         else
             texture = cub->w_text;
-        text_x = (int)cub->intersect.x % TILE_SIZE;
+        text_x = (int)cub->intersect.y % TILE_SIZE;
     }
     else if (cub->intersect.hit == HORIZONTAL)
     {
@@ -57,7 +73,7 @@ void    render_wall(t_cub *cub)
             texture = cub->n_text;
         else
             texture = cub->s_text;
-        text_x = (int)cub->intersect.y % TILE_SIZE;
+        text_x = (int)cub->intersect.x % TILE_SIZE;
 
     }
     slice_wall(cub, &texture, text_x);

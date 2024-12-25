@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:31:17 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/24 18:25:57 by diahmed          ###   ########.fr       */
+/*   Updated: 2025/01/05 16:54:47 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,6 @@ int main(void)
 
 	ft_memset(&cub, 0, sizeof(t_cub *));
 	// init_all(&cub);
-	cub.mlx = mlx_init();
-	if (!cub.mlx)
-		return (0);
-	cub.mlx_wind = mlx_new_window(cub.mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
-	if (!cub.mlx_wind)
-		return (0);
-	cub.img.img = mlx_new_image(cub.mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!cub.img.img)
-		return (0);
-	cub.img.addr = mlx_get_data_addr(cub.img.img, &cub.img.bits_per_pixel, &cub.img.line_length, &cub.img.endian);
-	if (!cub.img.addr)
-		return (0);
 	cub.player_fov = 60;
 	cub.intersect.x = NO_HIT;
 	cub.intersect.y = NO_HIT;
@@ -39,7 +27,20 @@ int main(void)
 	cub.map.map = malloc(6 * sizeof(char *));
 	set_map(&cub.map);
 	set_player(&cub.map);
+	cub.mlx = mlx_init();
+	if (!cub.mlx)
+		return (0);
+	cub.mlx_wind = mlx_new_window(cub.mlx, cub.map.map_width * TILE_SIZE, cub.map.map_height * TILE_SIZE, "cub3D");
+	if (!cub.mlx_wind)
+		return (0);
+	cub.img.img = mlx_new_image(cub.mlx, cub.map.map_width * TILE_SIZE, cub.map.map_height * TILE_SIZE);
+	if (!cub.img.img)
+		return (0);
+	cub.img.addr = mlx_get_data_addr(cub.img.img, &cub.img.bits_per_pixel, &cub.img.line_length, &cub.img.endian);
+	if (!cub.img.addr)
+		return (0);
 	// printf(" 1 ang = %d\n\n", cub.map.player_angle);
+	init_text(&cub);
 	render_map(&cub);
 	// mlx_key_hook(cub.mlx_wind, events, &cub);
 	mlx_hook(cub.mlx_wind, 2, 0, &events, &cub);

@@ -6,7 +6,7 @@
 /*   By: diahmed <diahmed@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 16:38:43 by diahmed           #+#    #+#             */
-/*   Updated: 2024/12/24 12:06:07 by diahmed          ###   ########.fr       */
+/*   Updated: 2025/01/05 16:48:52 by diahmed          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define S 1
 # define D 2
 # define PI 3.141592653589793238462643383279502884197
-# define SPEED 5
+# define SPEED 50
 // # define ARROW_UP 126
 // # define ARROW_DOWN 125
 # define ARROW_LEFT 123
@@ -90,10 +90,10 @@ typedef struct s_map {
 	char	**map;
 	int		map_height;
 	int		map_width;
-	// char 	*north_txt;
-	// char 	*south_txt ;
-	// char 	*west_txt ;
-	// char 	*east_txt ;
+	char 	*north_txt;
+	char 	*south_txt ;
+	char 	*west_txt ;
+	char 	*east_txt ;
 	t_point		player;
 	double		player_angle;
 	double		ray_angle;
@@ -126,13 +126,15 @@ void    render_map(t_cub *cub);
 int 	events(int keycode, t_cub *cub);
 double	deg_to_rad(double angle_d);
 void	reset_angle(double *angle);
-void    draw_tile(t_data *img, double x, double y, int color);
+void    draw_tile(t_cub * cub, double x, double y, int color);
+double	count_distance(t_point point, t_point player);
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color, t_cub *cub);
 
 int	is_wall(double pix_x, double pix_y, t_cub *cub);
 
 t_point	intersect_point(t_map *map);
 // double	count_distance(t_point point, t_point player);
-
+void    init_text(t_cub *cub);
 double  wall_height(t_cub *cub);
 double  corret_distance(t_cub *cub);
 int get_pixel_color(t_texture *tex, int x, int y);

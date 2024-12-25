@@ -18,14 +18,14 @@
 		bottom = WIN_HEIGHT / 2 + wall_height / 2
 */
 
-double  corret_distance(t_cub *cub)
+double  correct_distance(t_cub *cub)
 {
     double	distored_d;
 	double	correct_d;
 	double	ang_diff;
 
 	ang_diff = cub->map.ray_angle - cub->map.player_angle;
-	distored_d = distance(cub->intersect, cub->map.player);
+	distored_d = count_distance(cub->intersect, cub->map.player);
 	correct_d = distored_d * cos(deg_to_rad(ang_diff));
 	return (correct_d);
 }
@@ -36,8 +36,8 @@ double  wall_height(t_cub *cub)
 	double	distance_to_screen;
 	double	correct_d;
 
-	correct_d = correct_distancce(cub);
-	distance_to_screen = WIN_WIDTH / (2 * tan(deg_to_rad(cub->player_fov / 2)));
+	correct_d = correct_distance(cub);
+	distance_to_screen = (cub->map.map_width * TILE_SIZE) / (2 * tan(deg_to_rad(cub->player_fov / 2)));
 	height = TILE_SIZE * distance_to_screen / correct_d;
 	return (height);
 }

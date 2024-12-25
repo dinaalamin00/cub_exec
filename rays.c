@@ -52,11 +52,14 @@ t_point	horizontal_coord(t_map *map)
 		&& (intersect.y >= 0 && intersect.y < map->map_height * TILE_SIZE))
 	{
 		if (map->map[(int)(intersect.y / TILE_SIZE)][(int)(intersect.x / TILE_SIZE)] == '1')
+		{
+			intersect.hit = HORIZONTAL;
 			return (intersect);
+		}
 		intersect.x += step.x;
 		intersect.y += step.y;
 	}
-	return ((t_point){NO_HIT, NO_HIT});
+	return ((t_point){NO_HIT, NO_HIT, NO_HIT});
 }
 
 t_point	vertical_coord(t_map *map)
@@ -85,11 +88,14 @@ double	temp;
 		&& (intersect.y >= 0 && intersect.y < map->map_height * TILE_SIZE))
 	{
 		if (map->map[(int)(intersect.y / TILE_SIZE)][(int)(intersect.x / TILE_SIZE)] == '1')
+		{
+			intersect.hit = VERTICAL;
 			return (intersect);
+		}
 		intersect.x += step.x;
 		intersect.y += step.y;
 	}
-	return ((t_point){NO_HIT, NO_HIT});
+	return ((t_point){NO_HIT, NO_HIT, NO_HIT});
 }
 
 

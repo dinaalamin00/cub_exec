@@ -1,20 +1,4 @@
-# include "cub3d.h"
-
-// void    init_all(t_cub *cub)
-// {
-//     cub->mlx = NULL;
-//     cub->mlx_wind = NULL;
-//     cub->img.img = NULL;
-//     cub->img.addr = NULL;
-//     cub->img.bits_per_pixel= 0;
-//     cub->img.line_length = 0;
-//     cub->img.endian = 0;
-//     cub->map.map = NULL;
-//     cub->map.map_height = 0;
-//     cub->map.map_width = 0;
-//     cub->map.player_x = 0;
-//     cub->map.player_y = 0;
-// }
+#include "cub3d.h"
 
 void	set_player(t_map *map)
 {
@@ -75,4 +59,24 @@ void	set_map(t_map *map)
 	close (fd);
 	map->map_height = n;
 	map->map_width = ft_strlen(map->map[0]);
+	map->player.hit = NO_HIT;
 }
+
+// void    load_text(t_cub *cub, t_texture *text, char *filename)
+// {
+//     text->img = mlx_xpm_file_to_image(cub->mlx, filename, &text->width, &text->height);
+//     if (!text->img)
+//     {
+//         printf("error in text %s\n", filename);
+//         exit (1);
+//     }
+//     text->addr = mlx_get_data_addr(text->img, &text->bits_per_pixel, &text->line_length, &text->endian);
+// }
+
+// void    init_text(t_cub *cub)
+// {
+//     load_text(cub, &cub->n_text, cub->map.north_txt);
+//     load_text(cub, &cub->s_text, cub->map.south_txt);
+//     load_text(cub, &cub->e_text, cub->map.east_txt);
+//     load_text(cub, &cub->w_text, cub->map.west_txt);
+// }

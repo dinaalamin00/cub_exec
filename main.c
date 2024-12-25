@@ -33,6 +33,9 @@ int main(void)
 	if (!cub.img.addr)
 		return (0);
 	cub.player_fov = 60;
+	cub.intersect.x = NO_HIT;
+	cub.intersect.y = NO_HIT;
+	cub.intersect.hit = NO_HIT;
 	cub.map.map = malloc(6 * sizeof(char *));
 	set_map(&cub.map);
 	set_player(&cub.map);

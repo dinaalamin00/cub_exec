@@ -46,6 +46,8 @@
 
 # define RED 0xFF0000
 # define BLACK 0x000000
+# define VERTICAL 1
+# define HORIZONTAL 0
 
 
 
@@ -62,6 +64,7 @@
 typedef struct s_point {
 	double	x;
 	double	y;
+	int		hit;
 }	t_point;
 
 typedef struct s_texture
@@ -94,6 +97,7 @@ typedef struct s_map {
 	t_point		player;
 	double		player_angle;
 	double		ray_angle;
+	double		ray_column;
 	double		dx;
 	double		dy;
 	// double		player_fov;
@@ -111,6 +115,7 @@ typedef struct s_cub {
 	t_texture	s_text;
 	t_texture	e_text;
 	t_texture	w_text;
+	t_point		intersect;
 	double		player_fov;
 } t_cub;
 
@@ -126,6 +131,12 @@ void    draw_tile(t_data *img, double x, double y, int color);
 int	is_wall(double pix_x, double pix_y, t_cub *cub);
 
 t_point	intersect_point(t_map *map);
-double	count_distance(t_point point, t_point player);
+// double	count_distance(t_point point, t_point player);
 
+double  wall_height(t_cub *cub);
+double  corret_distance(t_cub *cub);
+int get_pixel_color(t_texture *tex, int x, int y);
+void    slice_wall(t_cub *cub, t_texture *text, int text_x);
+void    render_wall(t_cub *cub);
+void	ray_cast(t_cub *cub);
 #endif

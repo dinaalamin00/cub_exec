@@ -107,27 +107,36 @@ void	draw_ray(t_cub *cub, t_point intersect)
 }
 
 
-void	draw_direction_line(t_cub *cub)
+void	ray_cast(t_cub *cub)
 {
-	t_point	point;
+	double	column;
 
+	column = 0;
 	cub->map.ray_angle = cub->map.player_angle;
 	reset_angle(&cub->map.player_angle);
 	while (cub->map.ray_angle < (cub->map.player_angle + cub->player_fov / 2))
 	{
-		point = intersect_point(&cub->map);
-		if (point.x != -1 && point.y != -1)
-			draw_ray(cub, point);
+		cub->intersect = intersect_point(&cub->map);
+		if (cub->intersect.x != -1 && cub->intersect.y != -1)
+		{
+			cub->map.ray_column = column;
+			render_wall(cub);
+		}
 		cub->map.ray_angle += 0.1;
-
+		column++;
 	}
 	cub->map.ray_angle = cub->map.player_angle;
+	column = TILE_SIZE * cub->map.map_width - 1;
 	while (cub->map.ray_angle > (cub->map.player_angle - cub->player_fov / 2))
 	{
-		point = intersect_point(&cub->map);
-		if (point.x != -1 && point.y != -1)
-			draw_ray(cub, point);
+		cub->intersect = intersect_point(&cub->map);
+		if (cub->intersect.x != -1 && cub->intersect.y != -1)
+		{
+			cub->map.ray_column = column;
+			render_wall(cub);
+		}
 		cub->map.ray_angle -= 0.1;
+		column--;
 		// reset_angle(&cub->map.ray_angle);
 	}
 }
@@ -164,23 +173,22 @@ void	render_map(t_cub *cub)
 
 	i = 0;
 	put_black_floor(cub);
-	while (i < cub->map.map_height)
-	{
-		j = 0;
-		while (j < cub->map.map_width)
-		{
-			scr_x = j * TILE_SIZE;
-			scr_y = i * TILE_SIZE;
-			if (cub->map.map[i][j] == '1')
-				draw_tile(&cub->img, scr_x, scr_y, WALL_COLOR);
-			else
-				draw_tile(&cub->img, scr_x, scr_y, FLOOR_COLOR);
-			j++;
-		}
-		i++;
-	}
-	draw_player(&cub->img, cub->map.player.x, cub->map.player.y, PLAYER_COLOR);
-	draw_direction_line(cub);
+	// while (i < cub->map.map_height)
+	// {
+	// 	j = 0;
+	// 	while (j < cub->map.map_width)
+	// 	{
+	// 		scr_x = j * TILE_SIZE;
+	// 		scr_y = i * TILE_SIZE;
+	// 		if (cub->map.map[i][j] == '1')
+	// 			draw_tile(&cub->img, scr_x, scr_y, WALL_COLOR);
+	// 		else
+	// 			draw_tile(&cub->img, scr_x, scr_y, FLOOR_COLOR);
+	// 		j++;
+	// 	}
+	// 	i++;
+	// draw_player(&cub->img, cub->map.player.x, cub->map.player.y, PLAYER_COLOR);
+	ray_cast(cub);
 	if (cub->img.addr == NULL)
 		printf("Failed to get image address\n");
 	mlx_put_image_to_window(cub->mlx, cub->mlx_wind, cub->img.img, 0, 0);
